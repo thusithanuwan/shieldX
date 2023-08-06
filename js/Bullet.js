@@ -14,4 +14,17 @@ export default class Bullet {
         ctx.fillStyle = this.bulletColor;
         ctx.fillRect(this.x, this.y, this.width, this.height);
     }
+
+    collideWith(invader) {
+        if (
+            this.x + this.width > invader.x &&
+            this.x < invader.x + invader.width &&
+            this.y + this.height > invader.y &&
+            this.y < invader.y + invader.height
+        ) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

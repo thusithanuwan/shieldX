@@ -29,6 +29,9 @@ export default class InvaderController {
         this.createInvader();
         this.enemyBulletController = invaderBulletController;
         this.playerBulletController = playerBulletController;
+
+        this.invaderDethSound = new Audio("sound/enemy-death.wav");
+        this.invaderDethSound.volume = 0.1;
     }
 
 
@@ -51,6 +54,7 @@ export default class InvaderController {
         this.resetMoveDownTimer();
         this.decrementMoveDownTimer();
         this.fireBullet();
+        this.collisionDetection();
 
     }
 
@@ -58,7 +62,6 @@ export default class InvaderController {
         this.invaderRows.flat().forEach((invader) => {
             invader.move(this.xVelocity, this.yVelocity);
             invader.draw(context);
-            console.log(this.currentDirection);
 
         });
     }
@@ -124,5 +127,19 @@ export default class InvaderController {
             const enemy = allInvaders[invaderIndex];
             this.enemyBulletController.shoot(enemy.x + enemy.width / 2, enemy.y, -3);
         }
+    }
+
+    collisionDetection() {
+        this.invaderRows.forEach((invaderRow) => {
+            invaderRow.forEach((invader, invaderIndex) => {
+                if (this.playerBulletController.collideWith(invader)) {
+                    this.invaderDethSound.currentTime = 0;
+                    this.invaderDethSound.play();
+                    invaderRow.splice(invaderIndex, 1);
+                }
+            });
+        });
+
+        this.invaderRows = this.invaderRows.filter((invaderRow) => invaderRow.length > 0);
     }
 }

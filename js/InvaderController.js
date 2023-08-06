@@ -24,10 +24,10 @@ export default class InvaderController {
     fireBulletTimer = this.fireBulletTimerDefault;
 
 
-    constructor(canvas,enemyBulletController, playerBulletController) {
+    constructor(canvas,invaderBulletController, playerBulletController) {
         this.canvas = canvas;
         this.createInvader();
-        this.enemyBulletController = enemyBulletController;
+        this.enemyBulletController = invaderBulletController;
         this.playerBulletController = playerBulletController;
     }
 

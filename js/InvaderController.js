@@ -16,8 +16,8 @@ export default class InvaderController {
     currentDirection = MovingDir.right;
     xVelocity = 0;
     yVelocity = 0;
-    defaultXVelocity = 0;
-    defaultYVelocity = 1;
+    defaultXVelocity = 1;
+    defaultYVelocity = 10;
     moveDownTimerDefault = 30;
     moveDownTimer = this.moveDownTimerDefault;
     fireBulletTimerDefault = 100;
@@ -141,5 +141,9 @@ export default class InvaderController {
         });
 
         this.invaderRows = this.invaderRows.filter((invaderRow) => invaderRow.length > 0);
+    }
+
+    collideWith(player) {
+        return this.invaderRows.flat().some((invader) => invader.collideWith(player));
     }
 }

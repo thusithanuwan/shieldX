@@ -1,4 +1,5 @@
 import InvaderController from "./InvaderController.js";
+import Player from "./Player.js";
 const canvas = $('#game')[0];
 const context = canvas.getContext("2d");
 
@@ -9,10 +10,11 @@ const background = new Image();
 background.src = "img/Star Wars Space Background 69 images.jpg";
 
 const invadersController = new InvaderController(canvas);
-
+const player = new Player(canvas,5);
 function shield(){
     context.drawImage(background,0,0,canvas.width,canvas.height);
-    invadersController.draw(context);
+    // invadersController.draw(context);
+    player.draw(context);
 }
 
 setInterval(shield,1000/60);

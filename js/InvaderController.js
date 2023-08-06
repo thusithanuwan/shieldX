@@ -1,6 +1,6 @@
-import Invader from "./Invade.js";
-export default class InvadersController{
-    enemyMap = [
+import Invader from "./Invader.js";
+export default class InvaderController {
+    invaderMap = [
         [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
         [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -8,7 +8,7 @@ export default class InvadersController{
         [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     ];
-    enemyRows = [];
+    invaderRows = [];
 
    constructor(canvas) {
        this.canvas = canvas;
@@ -17,12 +17,12 @@ export default class InvadersController{
 
 
     createInvader() {
-        this.enemyMap.forEach((row, rowIndex) => {
-            this.enemyRows[rowIndex] = [];
-            row.forEach((enemyNumber, enemyIndex) => {
-                if (enemyNumber > 0) {
-                    this.enemyRows[rowIndex].push(
-                        new Enemy(enemyIndex * 50, rowIndex * 35, enemyNumber)
+        this.invaderMap.forEach((row, rowIndex) => {
+            this.invaderRows[rowIndex] = [];
+            row.forEach((invaderNumber, invaderIndex) => {
+                if (invaderNumber > 0) {
+                    this.invaderRows[rowIndex].push(
+                        new Invader(invaderIndex * 50, rowIndex * 35, invaderNumber)
                     );
                 }
             });

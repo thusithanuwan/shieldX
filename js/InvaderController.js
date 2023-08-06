@@ -16,15 +16,19 @@ export default class InvaderController {
     currentDirection = MovingDir.right;
     xVelocity = 0;
     yVelocity = 0;
-    defaultXVelocity = 1;
+    defaultXVelocity = 0;
     defaultYVelocity = 1;
     moveDownTimerDefault = 30;
     moveDownTimer = this.moveDownTimerDefault;
+    fireBulletTimerDefault = 100;
+    fireBulletTimer = this.fireBulletTimerDefault;
 
 
-    constructor(canvas) {
+    constructor(canvas,enemyBulletController, playerBulletController) {
         this.canvas = canvas;
         this.createInvader();
+        this.enemyBulletController = enemyBulletController;
+        this.playerBulletController = playerBulletController;
     }
 
 
@@ -46,6 +50,7 @@ export default class InvaderController {
         this.updateVelocityAndDirection();
         this.resetMoveDownTimer();
         this.decrementMoveDownTimer();
+        this.fireBullet();
 
     }
 
@@ -107,6 +112,17 @@ export default class InvaderController {
     decrementMoveDownTimer() {
         if (this.currentDirection === MovingDir.downLeft || this.currentDirection === MovingDir.downRight) {
             this.moveDownTimer--;
+        }
+    }
+
+    fireBullet() {
+        this.fireBulletTimer--;
+        if (this.fireBulletTimer <= 0) {
+            this.fireBulletTimer = this.fireBulletTimerDefault;
+            const allInvaders = this.invaderRows.flat();
+            const invaderIndex = Math.floor(Math.random() * allInvaders.length);
+            const enemy = allInvaders[invaderIndex];
+            this.enemyBulletController.shoot(enemy.x + enemy.width / 2, enemy.y, -3);
         }
     }
 }

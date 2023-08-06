@@ -1,4 +1,6 @@
 import Invader from "./Invader.js";
+import MovingDir from "./MovingDir.js";
+
 export default class InvaderController {
     invaderMap = [
         [1, 1, 1, 0, 1, 1, 1, 0, 1, 1],
@@ -10,10 +12,20 @@ export default class InvaderController {
     ];
     invaderRows = [];
 
-   constructor(canvas) {
-       this.canvas = canvas;
-       this.createInvader();
-   }
+
+    currentDirection = MovingDir.right;
+    xVelocity = 0;
+    yVelocity = 0;
+    defaultXVelocity = 1;
+    defaultYVelocity = 1;
+    moveDownTimerDefault = 30;
+    moveDownTimer = this.moveDownTimerDefault;
+
+
+    constructor(canvas) {
+        this.canvas = canvas;
+        this.createInvader();
+    }
 
 
     createInvader() {
@@ -28,13 +40,73 @@ export default class InvaderController {
             });
         });
     }
-    draw(context){
+
+    draw(context) {
         this.drawInvader(context);
+        this.updateVelocityAndDirection();
+        this.resetMoveDownTimer();
+        this.decrementMoveDownTimer();
+
     }
-    drawInvader(context){
-        this.invaderRows.flat().forEach((invader)=>{
+
+    drawInvader(context) {
+        this.invaderRows.flat().forEach((invader) => {
+            invader.move(this.xVelocity, this.yVelocity);
             invader.draw(context);
+            console.log(this.currentDirection);
+
         });
     }
 
+    updateVelocityAndDirection() {
+        for (const invaderRow of this.invaderRows) {
+            if (this.currentDirection === MovingDir.right) {
+                this.xVelocity = this.defaultXVelocity;
+                this.yVelocity = 0;
+                const rightMostInvader = invaderRow[invaderRow.length - 1];
+                if (rightMostInvader.x + rightMostInvader.width >= this.canvas.width) {
+                    this.currentDirection = MovingDir.downLeft;
+                    break;
+                }
+            } else if (this.currentDirection === MovingDir.downLeft) {
+                if (this.moveDown(MovingDir.left)) {
+                    break;
+                }
+            } else if (this.currentDirection === MovingDir.left) {
+                this.xVelocity = -this.defaultXVelocity;
+                this.yVelocity = 0;
+                const leftMostEnemy = invaderRow[0];
+                if (leftMostEnemy.x <= 0) {
+                    this.currentDirection = MovingDir.downRight;
+                    break;
+                }
+            } else if (this.currentDirection === MovingDir.downRight) {
+                if (this.moveDown(MovingDir.right)) {
+                    break;
+                }
+            }
+        }
+    }
+
+    moveDown(newDirection) {
+        this.xVelocity = 0;
+        this.yVelocity = this.defaultYVelocity;
+        if (this.moveDownTimer <= 0) {
+            this.currentDirection = newDirection;
+            return true;
+        }
+        return false;
+    }
+
+    resetMoveDownTimer() {
+        if (this.moveDownTimer <= 0) {
+            this.moveDownTimer = this.moveDownTimerDefault;
+        }
+    }
+
+    decrementMoveDownTimer() {
+        if (this.currentDirection === MovingDir.downLeft || this.currentDirection === MovingDir.downRight) {
+            this.moveDownTimer--;
+        }
+    }
 }

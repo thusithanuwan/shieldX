@@ -11,8 +11,9 @@ const background = new Image();
 background.src = "img/Star Wars Space Background 69 images.jpg";
 
 const playerBulletController = new BulletController(canvas, 10, "red", true);
-const invadersController = new InvaderController(canvas);
-const player = new Player(canvas,5);
+const enemyBulletController = new BulletController(canvas, 4, "white", false);
+const invadersController = new InvaderController(canvas,playerBulletController,enemyBulletController);
+const player = new Player(canvas,5, playerBulletController);
 function shield(){
     context.drawImage(background,0,0,canvas.width,canvas.height);
     // invadersController.draw(context);

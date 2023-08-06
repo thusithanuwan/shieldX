@@ -1,3 +1,4 @@
+
 export default class Invader {
     constructor(x, y, imageNumber) {
         this.x = x;
@@ -7,5 +8,8 @@ export default class Invader {
 
         this.image = new Image();
         this.image.src = `img/invader${imageNumber}.gif`;
+    }
+    draw(context) {
+        context.drawImage(this.image, this.x, this.y, this.width, this.height);
     }
 }

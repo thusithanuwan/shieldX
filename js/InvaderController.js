@@ -1,12 +1,12 @@
 import Invader from "./Invader.js";
 export default class InvaderController {
     invaderMap = [
-        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [1, 1, 1, 0, 1, 1, 1, 0, 1, 1],
+        [1, 1, 0, 1, 1, 0, 1, 0, 1, 1],
+        [0, 0, 0, 1, 0, 0, 0, 0, 0, 0],
+        [0, 0, 1, 0, 0, 1, 0, 0, 0, 0],
+        [0, 1, 0, 1, 1, 0, 1, 1, 1, 1],
+        [0, 1, 0, 0, 1, 0, 0, 1, 0, 0],
     ];
     invaderRows = [];
 
@@ -22,7 +22,7 @@ export default class InvaderController {
             row.forEach((invaderNumber, invaderIndex) => {
                 if (invaderNumber > 0) {
                     this.invaderRows[rowIndex].push(
-                        new Invader(invaderIndex * 50, rowIndex * 35, invaderNumber)
+                        new Invader(invaderIndex * 60, rowIndex * 35, invaderNumber)
                     );
                 }
             });
@@ -32,7 +32,9 @@ export default class InvaderController {
         this.drawInvader(context);
     }
     drawInvader(context){
-
+        this.invaderRows.flat().forEach((invader)=>{
+            invader.draw(context);
+        });
     }
 
 }

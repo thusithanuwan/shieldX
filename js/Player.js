@@ -1,10 +1,13 @@
 export default class player {
     rightPressed = false;
     leftPressed = false;
+    shootPressed = false;
 
-    constructor(canvas, velocity) {
+
+    constructor(canvas, velocity,bulletController) {
         this.canvas = canvas;
         this.velocity = velocity;
+        this.bulletcontroller = bulletController;
 
         this.x = this.canvas.width / 2 - 75;
         this.y = this.canvas.height - 100;
@@ -18,6 +21,9 @@ export default class player {
     }
 
     draw(context) {
+        if (this.shootPressed) {
+            this.bulletcontroller.shoot(this.x + this.width / 2, this.y, 4, 10);
+        }
         context.drawImage(this.image, this.x, this.y, this.width, this.height);
         this.move();
         this.collideWithWalls();
@@ -30,6 +36,9 @@ export default class player {
         if (event.code == "ArrowLeft") {
             this.leftPressed = true;
         }
+        if (event.code == "Space") {
+            this.shootPressed = true;
+        }
     }
     keyup = (event) => {
         if (event.code == "ArrowRight") {
@@ -37,6 +46,9 @@ export default class player {
         }
         if (event.code == "ArrowLeft") {
             this.leftPressed = false;
+        }
+        if (event.code == "Space") {
+            this.shootPressed = false;
         }
     }
     move() {

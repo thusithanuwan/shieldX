@@ -24,5 +24,16 @@ export default class BulletController {
             this.timeTillNextBulletAllowed = timeTillNextBulletAllowed;
         }
     }
+    draw(context) {
+        this.bullets = this.bullets.filter(
+            (bullet) => bullet.y + bullet.width > 0 && bullet.y <= this.canvas.height
+        );
+
+        this.bullets.forEach((bullet) => bullet.draw(context));
+        if (this.timeTillNextBulletAllowed > 0) {
+            this.timeTillNextBulletAllowed--;
+        }
+    }
+
 
 }

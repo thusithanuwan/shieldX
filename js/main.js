@@ -2,7 +2,7 @@ import InvaderController from "./InvaderController.js";
 const canvas = $('#game')[0];
 const context = canvas.getContext("2d");
 
-canvas.width = 600;
+canvas.width = 1000;
 canvas.height = 500;
 
 const background = new Image();

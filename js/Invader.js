@@ -12,4 +12,8 @@ export default class Invader {
     draw(context) {
         context.drawImage(this.image, this.x, this.y, this.width, this.height);
     }
+    move(xVelocity, yVelocity) {
+        this.x += xVelocity;
+        this.y += yVelocity;
+    }
 }

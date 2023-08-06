@@ -11,6 +11,7 @@ export class InvadersController{
 
    constructor(canvas) {
        this.canvas = canvas;
+       this.createEnemies();
    }
 
 
@@ -26,4 +27,6 @@ export class InvadersController{
             });
         });
     }
+
+
 }
